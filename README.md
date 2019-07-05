@@ -1,6 +1,6 @@
 # vue-banana-i18n
 
-A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support translations in Vue.js
+A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support localization in Vue.js
 
 ## Installation
 
