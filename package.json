@@ -1,6 +1,6 @@
 {
   "name": "vue-banana-i18n",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Banana-i18n wrapper to support localization in Vue.js",
   "author": {
     "name": "Santhosh Thottingal",
@@ -10,7 +10,7 @@
     "url": "git+https://github.com/santhoshtr/vue-banana-i18n.git"
   },
   "license": "MIT",
-  "main": "src/main.js",
+  "main": "dist/vue-banana-i18n.js",
   "homepage": "github.com/santhoshtr/vue-banana-i18n",
   "keywords": [
     "vue",
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "test": "NODE_ENV=test mocha",
-    "build": "webpack --mode=production"
+    "build": "webpack"
   },
   "dependencies": {
     "banana-i18n": "^1.0.2"
@@ -40,6 +40,8 @@
     "jsdom-global": "3.0.2",
     "mocha": "^5.2.0",
     "mocha-eslint": "^4.1.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "webpack": "^3.6.0",
+    "webpack-cli": "^3.1.2"
   }
 }
