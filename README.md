@@ -1,6 +1,6 @@
 # vue-banana-i18n
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/vue-banana-i18n.svg?style=flat)](https://www.npmjs.com/package/vue-banana-i18n) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/santhoshtr/vue-banana-i18n/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/vue-banana-i18n.svg?style=flat)](https://www.npmjs.com/package/vue-banana-i18n)
 
 A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support localization in Vue.js
 
