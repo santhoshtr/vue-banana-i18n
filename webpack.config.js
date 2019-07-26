@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/index.js',
   output: {
     library: 'vue-banana-i18n',
     libraryExport: 'default',

@@ -52,10 +52,23 @@ Vue.use(i18n, {
 })
 ```
 
+## Directive
+
+The `v-i18n` directive as illustrated in below example is also useful.
+
+``` html
+<div id="app">
+  <h1 v-1i8n="'hello_world'"></h1>
+  <h2 class='result' v-i18n="{msg: 'search_results', params:[10]}"></h2>
+  <div class='status' v-i18n="{msg: 'profile_change_message', params:['Alice', 'female']}"></h2>
+</div>
+
+```
+
 ## Message format
 
 The Banana i18n system and its messages are documented at [banana-i18n](https://github.com/wikimedia/banana-i18n)
 
-## License:
+## License
 
 [MIT](https://cos.mit-license.org/)
