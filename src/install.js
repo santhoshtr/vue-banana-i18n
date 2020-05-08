@@ -1,5 +1,5 @@
 import extend from './extend'
-import { bind, update, unbind } from './directive'
+import { bindText, bindHtml, updateHtml, updateText, unbind } from './directive'
 import VueBananaI18n from './index'
 
 export let Vue
@@ -29,5 +29,6 @@ export function install (_Vue, options = { messages: {}, locale: 'en' }) {
   })
 
   extend(Vue)
-  Vue.directive('i18n', { bind, update, unbind })
+  Vue.directive('i18n', { bind: bindText, update: updateText, unbind })
+  Vue.directive('i18n-html', { bind: bindHtml, update: updateHtml, unbind })
 }

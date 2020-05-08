@@ -54,7 +54,7 @@ Vue.use(i18n, {
 
 ## Directive
 
-The `v-i18n` directive as illustrated in below example is also useful.
+The `v-i18n` directive as illustrated in below example is also useful. It sets the text for the node. HTML values if any, will be escaped.
 
 ``` html
 <div id="app">
@@ -64,6 +64,19 @@ The `v-i18n` directive as illustrated in below example is also useful.
 </div>
 
 ```
+
+Alternative syntax:
+
+``` html
+<div id="app">
+  <h1 v-1i8n="'hello_world'"></h1>
+  <h2 class='result' v-i18n:search_results="[10]"></h2>
+  <div class='status' v-i18n:profile_change_message="['Alice', 'female']"></h2>
+</div>
+
+```
+
+To set html of the node, use `v-i18n-html` directive just like above.
 
 ## Message format
 

@@ -8,12 +8,14 @@ const translations = {
   en: {
     'hello_world': 'Hello world',
     'search_results': 'Found $1 {{PLURAL:$1|result|results}}',
-    'profile_change_message': '$1 changed {{GENDER:$2|his|her}} profile picture'
+    'profile_change_message': '$1 changed {{GENDER:$2|his|her}} profile picture',
+    'hello_wikipedia': 'Hello [https://wikipedia.org wikipedia.org]'
   },
   ml: {
     'hello_world': 'എല്ലാവർക്കും നമസ്കാരം',
     'search_results': '{{PLURAL:$1|$1 ഫലം|$1 ഫലങ്ങൾ|1=ഒരു ഫലം}} കണ്ടെത്തി',
-    'profile_change_message': '$1 {{GENDER:$2|അവന്റെ|അവളുടെ}} പ്രൊഫൈൽ പടം മാറ്റി'
+    'profile_change_message': '$1 {{GENDER:$2|അവന്റെ|അവളുടെ}} പ്രൊഫൈൽ പടം മാറ്റി',
+    'hello_wikipedia': 'നമസ്കാരം [https://wikipedia.org wikipedia.org]'
   }
 }
 
@@ -108,21 +110,49 @@ describe('v-i18n directive', () => {
     assert.strict.equal(typeof wrapper.vm.$options.directives['i18n'], 'object')
   })
 
-  it('string literal should be translated', async () => {
+  it('string literal should be translated as text', async () => {
     const wrapper = mount({
       template: `<p v-i18n="'hello_world'"></p>`
     })
-    const vm = wrapper.vm
+
     assert.strict.equal(wrapper.text(), 'Hello world')
-    vm.i18n.locale = 'ml'
+    wrapper.vm.i18n.locale = 'ml'
     await Vue.nextTick()
     assert.strict.equal(wrapper.text(), 'എല്ലാവർക്കും നമസ്കാരം')
   })
 
   it('object should be translated', () => {
-    const wrapper = mount({
+    let wrapper = mount({
       template: `<p v-i18n="{msg: 'search_results', params:[10]}"></p>`
     })
     assert.strict.equal(wrapper.text(), 'Found 10 results')
+    wrapper = mount({
+      template: `<p v-i18n:search_results="[11]"></p>`
+    })
+    assert.strict.equal(wrapper.text(), 'Found 11 results')
+  })
+
+  it('html should be escaped', () => {
+    const wrapper = mount({
+      template: `<p v-i18n="'hello_wikipedia'"></p>`
+    })
+    assert.strict.equal(wrapper.text(), 'Hello <a href="https://wikipedia.org">wikipedia.org</a>')
+    assert.strict.equal(wrapper.html(), '<p>Hello &lt;a href="https://wikipedia.org"&gt;wikipedia.org&lt;/a&gt;</p>')
+  })
+})
+
+describe('v-i18n-html directive', () => {
+  it('creates the v-i18n-html directive', () => {
+    const wrapper = mount(Component, { propsData: { msg: 'hello_world' } })
+    assert.strict.equal(typeof wrapper.vm.$options.directives['i18n-html'], 'object')
+  })
+
+  it('string literal should be translated as html', () => {
+    const wrapper = mount({
+      template: `<p v-i18n-html="'hello_wikipedia'"></p>`
+    })
+
+    assert.strict.equal(wrapper.html(), '<p>Hello <a href="https://wikipedia.org">wikipedia.org</a></p>')
+    assert.strict.equal(wrapper.find('a').attributes('href'), 'https://wikipedia.org')
   })
 })
