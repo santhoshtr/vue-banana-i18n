@@ -1,7 +1,7 @@
 'use strict'
-
 import VueBananai18n from '../src'
 import Vue from 'vue'
+import { mount } from '@vue/test-utils'
 import assert from 'assert'
 
 const translations = {
@@ -22,19 +22,29 @@ Vue.use(VueBananai18n, {
   locale: 'en'
 })
 
+const Component = {
+  template: `
+    <p>{{$i18n(msg)}}</p>
+  `,
+  props: {
+    'msg': { type: String, default: 'hello_world' }
+  }
+}
+
 describe('Vue-Banana-i18n', () => {
+  let wrapper
+  let vm
+  beforeEach(() => {
+    wrapper = mount(Component, { propsData: { msg: 'hello_world' } })
+    vm = wrapper.vm
+  })
   it('will simply return the original string if no translation is found', () => {
-    let vm = new Vue()
-
-    assert.strict.equal(vm.$i18n('hello_world'), 'Hello world')
-
+    assert.strict.equal(wrapper.text(), 'Hello world')
     vm.i18n.locale = 'DNE'
-    assert.strict.equal(vm.$i18n('msg_key_dne'), 'msg_key_dne')
+    assert.strict.equal(wrapper.text(), 'Hello world')
   })
 
   it('will return the translation with placeholder substitutions', () => {
-    let vm = new Vue()
-
     vm.i18n.locale = 'en'
     assert.strict.equal(vm.$i18n('search_results', 0), 'Found 0 results')
     assert.strict.equal(vm.$i18n('search_results', 1), 'Found 1 result')
@@ -50,8 +60,6 @@ describe('Vue-Banana-i18n', () => {
   })
 
   it('will return the translation in correct locale when locale changed in between', () => {
-    let vm = new Vue()
-
     vm.i18n.locale = 'en'
     assert.strict.equal(vm.$i18n('search_results', 1), 'Found 1 result')
     assert.strict.equal(vm.$i18n('search_results', 10), 'Found 10 results')
@@ -78,10 +86,7 @@ describe('Vue-Banana-i18n', () => {
   })
 
   it('will fallback to another locale if message is not present', () => {
-    let vm = new Vue()
-
     vm.i18n.locale = 'en'
-
     vm.i18n.loadMessages({
       'new_mssage': 'New message'
     }, 'en')
@@ -89,79 +94,35 @@ describe('Vue-Banana-i18n', () => {
     assert.strict.equal(vm.$i18n('new_mssage'), 'New message', 'Fallback to English')
   })
 
-  it('will re-render if locale changed', (done) => {
-    const vm = new Vue({
-      render (h) {
-        // <p ref="text">{{$i18n('hello_world')}}</p>
-        return h('p', {
-          ref: 'text'
-        },
-        [this.$i18n('hello_world')]
-        )
-      }
-    }).$mount()
-
-    vm.$nextTick(() => {
-      assert.strictEqual(vm.$refs.text.textContent, 'Hello world')
-      vm.i18n.locale = 'ml'
-      vm.$nextTick(() => {
-        assert.strictEqual(vm.$refs.text.textContent, 'എല്ലാവർക്കും നമസ്കാരം', 'reactivity works')
-        done()
-      })
-    })
+  it('will re-render if locale changed', async () => {
+    assert.strict.equal(wrapper.text(), 'Hello world')
+    vm.i18n.locale = 'ml'
+    await Vue.nextTick()
+    assert.strict.equal(wrapper.text(), 'എല്ലാവർക്കും നമസ്കാരം')
   })
 })
 
 describe('v-i18n directive', () => {
-  afterEach(() => {
-    let vm = new Vue()
-    vm.i18n.locale = 'en'
-  })
-
   it('creates the v-i18n directive', () => {
-    let vm = new Vue()
-
-    assert.strict.equal(typeof vm.$options.directives['i18n'], 'object')
+    const wrapper = mount(Component, { propsData: { msg: 'hello_world' } })
+    assert.strict.equal(typeof wrapper.vm.$options.directives['i18n'], 'object')
   })
 
-  it('string literal should be translated', done => {
-    const vm = new Vue({
-      render (h) {
-        // <p ref="text" v-i18n="'hello_world'"></p>
-        return h('p', { ref: 'text',
-          directives: [{
-            name: 'i18n', rawName: 'v-i18n', value: ('hello_world'), expression: "'hello_world'"
-          }] })
-      }
-    }).$mount()
-
-    vm.$nextTick(() => {
-      assert.strictEqual(vm.$refs.text.textContent, 'Hello world')
-      vm.i18n.locale = 'ml'
-      vm.$nextTick(() => {
-        assert.strictEqual(vm.$refs.text.textContent, 'എല്ലാവർക്കും നമസ്കാരം', 'reactivity works')
-        done()
-      })
+  it('string literal should be translated', async () => {
+    const wrapper = mount({
+      template: `<p v-i18n="'hello_world'"></p>`
     })
+    const vm = wrapper.vm
+    assert.strict.equal(wrapper.text(), 'Hello world')
+    vm.i18n.locale = 'ml'
+    await Vue.nextTick()
+    assert.strict.equal(wrapper.text(), 'എല്ലാവർക്കും നമസ്കാരം')
   })
 
-  it('object should be translated', done => {
-    const vm = new Vue({
-      render (h) {
-        // <p ref="text" v-i18n="{msg: 'search_results', params:[10]}"></p>
-        return h('p', { ref: 'text',
-          directives: [{
-            name: 'i18n',
-            rawName: 'v-i18n',
-            value: ({ msg: 'search_results', params: [10] }),
-            expression: "{msg: 'search_results', params:[10]}"
-          }] })
-      }
-    }).$mount()
-
-    vm.$nextTick(() => {
-      assert.strictEqual(vm.$refs.text.textContent, 'Found 10 results')
-      done()
+  it('object should be translated', () => {
+    const wrapper = mount({
+      template: `<p v-i18n="{msg: 'search_results', params:[10]}"></p>`
     })
+    assert.strict.equal(wrapper.text(), 'Found 10 results')
   })
 })
