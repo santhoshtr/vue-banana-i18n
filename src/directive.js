@@ -13,26 +13,16 @@ export function bindHtml (el, binding, vnode) {
 }
 
 export function updateText (el, binding, vnode) {
-  if (isMsgContextChanged(el, vnode)) {
-    bindText(el, binding, vnode)
-  }
+  bindText(el, binding, vnode)
 }
 
 export function updateHtml (el, binding, vnode) {
-  if (isMsgContextChanged(el, vnode)) {
-    bindHtml(el, binding, vnode)
-  }
+  bindHtml(el, binding, vnode)
 }
 
 export function unbind (el, binding, vnode) {
   el._locale = undefined
   delete el['_locale']
-}
-
-function isMsgContextChanged (el, vnode) {
-  if (el._locale !== vnode.context.i18n.locale) {
-    return true
-  }
 }
 
 function parseValue (binding) {

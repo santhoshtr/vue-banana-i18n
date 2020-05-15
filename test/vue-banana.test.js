@@ -158,6 +158,20 @@ describe('v-i18n directive', () => {
     assert.strict.equal(wrapper.text(), 'Hello <a href="https://wikipedia.org">wikipedia.org</a>')
     assert.strict.equal(wrapper.html(), '<p>Hello &lt;a href="https://wikipedia.org"&gt;wikipedia.org&lt;/a&gt;</p>')
   })
+
+  it('reactive to params', async () => {
+    let params = [10]
+    const Component = {
+      template: `<p v-i18n="{msg: 'search_results', params}"></p>`,
+      props: ['params']
+    }
+    let wrapper = mount(Component, { propsData: { params } })
+    assert.strict.equal(wrapper.text(), 'Found 10 results')
+    params = [11]
+    wrapper.findComponent(Component).setProps({ params })
+    await Vue.nextTick()
+    assert.strict.equal(wrapper.text(), 'Found 11 results')
+  })
 })
 
 describe('v-i18n-html directive', () => {
