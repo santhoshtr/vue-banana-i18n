@@ -4,7 +4,7 @@
 
 A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support localization in Vue.js
 
-[Playground](https://codepen.io/santhoshtr/pen/YoOzEM)
+[Playground](https://codesandbox.io/s/vue-banana-i18n-demo-cl8sw)
 
 ## Installation
 
