@@ -1,7 +1,7 @@
 'use strict'
 import VueBananai18n from '../src'
 import Vue from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import assert from 'assert'
 
 const translations = {
@@ -101,6 +101,25 @@ describe('Vue-Banana-i18n', () => {
     vm.i18n.locale = 'ml'
     await Vue.nextTick()
     assert.strict.equal(wrapper.text(), 'എല്ലാവർക്കും നമസ്കാരം')
+  })
+})
+
+describe('Vue-Banana-i18n global mixin', () => {
+  let wrapper
+  let vm
+  beforeEach(() => {
+    wrapper = shallowMount(Component, {
+      i18n: new VueBananai18n({
+        messages: translations,
+        locale: 'en'
+      }),
+      propsData: { msg: 'hello_world' } })
+    vm = wrapper.vm
+  })
+  it('will simply return the original string if no translation is found', () => {
+    assert.strict.equal(wrapper.text(), 'Hello world')
+    vm.i18n.locale = 'DNE'
+    assert.strict.equal(wrapper.text(), 'Hello world')
   })
 })
 
