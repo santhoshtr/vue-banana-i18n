@@ -21,7 +21,8 @@ const translations = {
 
 Vue.use(VueBananai18n, {
   messages: translations,
-  locale: 'en'
+  locale: 'en',
+  wikilinks: true
 })
 
 const Component = {
