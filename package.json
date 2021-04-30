@@ -29,12 +29,12 @@
     "banana-i18n": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@vue/cli-plugin-babel": "^4.5.7",
-    "@vue/cli-plugin-eslint": "^4.5.7",
-    "@vue/cli-plugin-unit-jest": "^4.5.7",
-    "@vue/cli-service": "^4.5.7",
-    "@vue/test-utils": "^1.1.0",
+    "@babel/core": "^7.14.0",
+    "@vue/cli-plugin-babel": "^4.5.12",
+    "@vue/cli-plugin-eslint": "^4.5.12",
+    "@vue/cli-plugin-unit-jest": "^4.5.12",
+    "@vue/cli-service": "^4.1.1",
+    "@vue/test-utils": "^1.1.4",
     "babel-preset-env": "1.7.0",
     "babel-register": "^6.26.0",
     "eslint": "^5.9.0",
@@ -43,10 +43,10 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jsdom": "16.4.0",
+    "jsdom": "16.5.3",
     "jsdom-global": "3.0.2",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
-    "webpack-cli": "^4.0.0"
+    "webpack-cli": "^4.6.0"
   }
 }
