@@ -9,7 +9,8 @@ const translations = {
     'hello_world': 'Hello world',
     'search_results': 'Found $1 {{PLURAL:$1|result|results}}',
     'profile_change_message': '$1 changed {{GENDER:$2|his|her}} profile picture',
-    'hello_wikipedia': 'Hello [https://wikipedia.org wikipedia.org]'
+    'hello_wikipedia': 'Hello [https://wikipedia.org wikipedia.org]',
+    'hello_wikipedia_unsafe': 'Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a>'
   },
   ml: {
     'hello_world': 'എല്ലാവർക്കും നമസ്കാരം',
@@ -188,5 +189,14 @@ describe('v-i18n-html directive', () => {
 
     assert.strict.equal(wrapper.html(), '<p>Hello <a href="https://wikipedia.org">wikipedia.org</a></p>')
     assert.strict.equal(wrapper.find('a').attributes('href'), 'https://wikipedia.org')
+  })
+
+  it('Unsafe HTML should be escaped', () => {
+    const wrapper = mount({
+      template: `<p v-i18n-html="'hello_wikipedia_unsafe'"></p>`
+    })
+
+    assert.strict.equal(wrapper.html(), '<p>Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a></p>')
+    assert.strict.notEqual(wrapper.find('a').attributes('href'), 'https://wikipedia.org')
   })
 })
