@@ -6,17 +6,17 @@ import assert from 'assert'
 
 const translations = {
   en: {
-    'hello_world': 'Hello world',
-    'search_results': 'Found $1 {{PLURAL:$1|result|results}}',
-    'profile_change_message': '$1 changed {{GENDER:$2|his|her}} profile picture',
-    'hello_wikipedia': 'Hello [https://wikipedia.org wikipedia.org]',
-    'hello_wikipedia_unsafe': 'Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a>'
+    hello_world: 'Hello world',
+    search_results: 'Found $1 {{PLURAL:$1|result|results}}',
+    profile_change_message: '$1 changed {{GENDER:$2|his|her}} profile picture',
+    hello_wikipedia: 'Hello [https://wikipedia.org wikipedia.org]',
+    hello_wikipedia_unsafe: 'Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a>'
   },
   ml: {
-    'hello_world': 'എല്ലാവർക്കും നമസ്കാരം',
-    'search_results': '{{PLURAL:$1|$1 ഫലം|$1 ഫലങ്ങൾ|1=ഒരു ഫലം}} കണ്ടെത്തി',
-    'profile_change_message': '$1 {{GENDER:$2|അവന്റെ|അവളുടെ}} പ്രൊഫൈൽ പടം മാറ്റി',
-    'hello_wikipedia': 'നമസ്കാരം [https://wikipedia.org wikipedia.org]'
+    hello_world: 'എല്ലാവർക്കും നമസ്കാരം',
+    search_results: '{{PLURAL:$1|$1 ഫലം|$1 ഫലങ്ങൾ|1=ഒരു ഫലം}} കണ്ടെത്തി',
+    profile_change_message: '$1 {{GENDER:$2|അവന്റെ|അവളുടെ}} പ്രൊഫൈൽ പടം മാറ്റി',
+    hello_wikipedia: 'നമസ്കാരം [https://wikipedia.org wikipedia.org]'
   }
 }
 
@@ -31,7 +31,7 @@ const Component = {
     <p>{{$i18n(msg)}}</p>
   `,
   props: {
-    'msg': { type: String, default: 'hello_world' }
+    msg: { type: String, default: 'hello_world' }
   }
 }
 
@@ -92,7 +92,7 @@ describe('Vue-Banana-i18n', () => {
   it('will fallback to another locale if message is not present', () => {
     vm.i18n.locale = 'en'
     vm.i18n.loadMessages({
-      'new_mssage': 'New message'
+      new_mssage: 'New message'
     }, 'en')
     vm.i18n.locale = 'ml'
     assert.strict.equal(vm.$i18n('new_mssage'), 'New message', 'Fallback to English')
@@ -115,7 +115,8 @@ describe('Vue-Banana-i18n global mixin', () => {
         messages: translations,
         locale: 'en'
       }),
-      propsData: { msg: 'hello_world' } })
+      propsData: { msg: 'hello_world' }
+    })
     vm = wrapper.vm
   })
   it('will simply return the original string if no translation is found', () => {
@@ -128,12 +129,12 @@ describe('Vue-Banana-i18n global mixin', () => {
 describe('v-i18n directive', () => {
   it('creates the v-i18n directive', () => {
     const wrapper = mount(Component, { propsData: { msg: 'hello_world' } })
-    assert.strict.equal(typeof wrapper.vm.$options.directives['i18n'], 'object')
+    assert.strict.equal(typeof wrapper.vm.$options.directives.i18n, 'object')
   })
 
   it('string literal should be translated as text', async () => {
     const wrapper = mount({
-      template: `<p v-i18n="'hello_world'"></p>`
+      template: '<p v-i18n="\'hello_world\'"></p>'
     })
 
     assert.strict.equal(wrapper.text(), 'Hello world')
@@ -144,18 +145,18 @@ describe('v-i18n directive', () => {
 
   it('object should be translated', () => {
     let wrapper = mount({
-      template: `<p v-i18n="{msg: 'search_results', params:[10]}"></p>`
+      template: '<p v-i18n="{msg: \'search_results\', params:[10]}"></p>'
     })
     assert.strict.equal(wrapper.text(), 'Found 10 results')
     wrapper = mount({
-      template: `<p v-i18n:search_results="[11]"></p>`
+      template: '<p v-i18n:search_results="[11]"></p>'
     })
     assert.strict.equal(wrapper.text(), 'Found 11 results')
   })
 
   it('html should be escaped', () => {
     const wrapper = mount({
-      template: `<p v-i18n="'hello_wikipedia'"></p>`
+      template: '<p v-i18n="\'hello_wikipedia\'"></p>'
     })
     assert.strict.equal(wrapper.text(), 'Hello <a href="https://wikipedia.org">wikipedia.org</a>')
     assert.strict.equal(wrapper.html(), '<p>Hello &lt;a href="https://wikipedia.org"&gt;wikipedia.org&lt;/a&gt;</p>')
@@ -164,10 +165,10 @@ describe('v-i18n directive', () => {
   it('reactive to params', async () => {
     let params = [10]
     const Component = {
-      template: `<p v-i18n="{msg: 'search_results', params}"></p>`,
+      template: '<p v-i18n="{msg: \'search_results\', params}"></p>',
       props: ['params']
     }
-    let wrapper = mount(Component, { propsData: { params } })
+    const wrapper = mount(Component, { propsData: { params } })
     assert.strict.equal(wrapper.text(), 'Found 10 results')
     params = [11]
     wrapper.findComponent(Component).setProps({ params })
@@ -184,7 +185,7 @@ describe('v-i18n-html directive', () => {
 
   it('string literal should be translated as html', () => {
     const wrapper = mount({
-      template: `<p v-i18n-html="'hello_wikipedia'"></p>`
+      template: '<p v-i18n-html="\'hello_wikipedia\'"></p>'
     })
 
     assert.strict.equal(wrapper.html(), '<p>Hello <a href="https://wikipedia.org">wikipedia.org</a></p>')
@@ -193,7 +194,7 @@ describe('v-i18n-html directive', () => {
 
   it('Unsafe HTML should be escaped', () => {
     const wrapper = mount({
-      template: `<p v-i18n-html="'hello_wikipedia_unsafe'"></p>`
+      template: '<p v-i18n-html="\'hello_wikipedia_unsafe\'"></p>'
     })
 
     assert.strict.equal(wrapper.html(), '<p>Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a></p>')

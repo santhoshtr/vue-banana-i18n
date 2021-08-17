@@ -1,6 +1,6 @@
 {
   "name": "vue-banana-i18n",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "A Banana-i18n wrapper to support localization in Vue.js",
   "author": {
     "name": "Santhosh Thottingal",
@@ -20,33 +20,28 @@
     "internationalization"
   ],
   "scripts": {
-    "build": "webpack",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint",
+    "build": "rollup -c",
+    "lint": "eslint src test",
     "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
     "banana-i18n": "^2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-plugin-unit-jest": "^4.5.12",
-    "@vue/cli-service": "^4.1.1",
-    "@vue/test-utils": "^1.1.4",
-    "babel-preset-env": "1.7.0",
-    "babel-register": "^6.26.0",
-    "eslint": "^5.9.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.22.1",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@vue/compiler-sfc": "^3.2.1",
+    "@vue/test-utils": "^2.0.0-rc.12",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "jsdom": "16.5.3",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.15.2",
+    "jsdom": "17.0.0",
     "jsdom-global": "3.0.2",
-    "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12",
-    "webpack-cli": "^4.6.0"
+    "rollup": "^2.46.0",
+    "rollup-plugin-esbuild": "^4.5.0",
+    "vue": "^3.2.3"
   }
 }
