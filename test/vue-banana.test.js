@@ -11,7 +11,7 @@ const translations = {
     search_results: 'Found $1 {{PLURAL:$1|result|results}}',
     profile_change_message: '$1 changed {{GENDER:$2|his|her}} profile picture',
     hello_wikipedia: 'Hello [https://wikipedia.org wikipedia.org]',
-    hello_wikipedia_unsafe: 'Hello [wiki] <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a>'
+    hello_wikipedia_unsafe: 'Hello [http://wikipedia.org <script>alert( "link-script test" );</script>]'
   },
   ml: {
     hello_world: 'എല്ലാവർക്കും നമസ്കാരം',

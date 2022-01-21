@@ -6,6 +6,8 @@ A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support loc
 
 [Playground](https://codesandbox.io/s/vue3-banana-i18n-wpw5q)
 
+> For Vue 2 use version 1.x. Version 2.x+ only supports Vue 3.x+
+
 ## Installation
 
 ```javascript
@@ -32,7 +34,7 @@ import i18n from 'vue-banana-i18n'
 ``` javascript
 import { createApp } from "vue";
 import App from "./App.vue";
-import i18n from 'vue-banana-i18n'
+import {createI18n} from 'vue-banana-i18n'
 
 const messages = {
   en: {
@@ -48,10 +50,12 @@ const messages = {
 }
 
 const app = createApp(App);
-app.use(i18n, {
+const i18nPlugin = createI18n({
   locale: "en",
   messages: messages
 });
+
+app.use(i18nPlugin);
 app.mount("#app");
 ```
 
