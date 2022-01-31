@@ -4,7 +4,9 @@
 
 A [banana-i18n](https://github.com/wikimedia/banana-i18n) wrapper to support localization in Vue.js
 
-[Playground](https://codesandbox.io/s/vue-banana-i18n-demo-cl8sw)
+[Playground](https://codesandbox.io/s/vue3-banana-i18n-wpw5q)
+
+> For Vue 2 use version 1.x. Version 2.x+ only supports Vue 3.x+
 
 ## Installation
 
@@ -30,8 +32,9 @@ import i18n from 'vue-banana-i18n'
 ```
 
 ``` javascript
-import Vue from 'vue'
-import i18n from 'vue-banana-i18n'
+import { createApp } from "vue";
+import App from "./App.vue";
+import {createI18n} from 'vue-banana-i18n'
 
 const messages = {
   en: {
@@ -46,10 +49,14 @@ const messages = {
   }
 }
 
-Vue.use(i18n, {
-  locale:'es',
-  messages:messages
-})
+const app = createApp(App);
+const i18nPlugin = createI18n({
+  locale: "en",
+  messages: messages
+});
+
+app.use(i18nPlugin);
+app.mount("#app");
 ```
 
 ## Directive
@@ -76,7 +83,13 @@ Alternative syntax:
 
 ```
 
-To set html of the node, use `v-i18n-html` directive just like above.
+To set html of the node, use `v-i18n.html` or `v-i18n-html` directive just like above.
+
+Example:
+
+```html
+  <h2 class='result' v-i18n:search_results.html="[10]"></h2>
+```
 
 ## Message format
 
