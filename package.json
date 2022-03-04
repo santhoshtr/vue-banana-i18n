@@ -17,7 +17,7 @@
   "module": "./dist/vue-banana-i18n.es.js",
   "exports": {
     ".": {
-      "import": "./distvue-banana-i18n.es.js",
+      "import": "./dist/vue-banana-i18n.es.js",
       "require": "./dist/vue-banana-i18n.umd.js"
     }
   },
