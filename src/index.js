@@ -49,6 +49,10 @@ export function createI18n (options = { messages: {}, locale: 'en', wikilinks: t
       app.provide(contextSymbol, bananai18n)
 
       app.config.globalProperties.$i18n = (msg, params) => {
+        params = params || []
+        if (!Array.isArray(params)) {
+          params = [params]
+        }
         return bananai18n.i18n(msg, params)
       }
 
@@ -62,16 +66,16 @@ export function createI18n (options = { messages: {}, locale: 'en', wikilinks: t
 
         if (binding.modifiers.html) {
           // v-i18n.html or v-i18n:message_key.html
-          el.innerHTML = bananai18n.i18n(msg, params)
+          el.innerHTML = bananai18n.i18n(msg, ...params)
         } else {
-          el.textContent = bananai18n.i18n(msg, params)
+          el.textContent = bananai18n.i18n(msg, ...params)
         }
       })
 
       app.directive('i18n-html', (el, binding) => {
         const { msg, params } = parseValue(binding)
         // The content is sanitized HTML, hence innerHTML is safe.
-        el.innerHTML = bananai18n.i18n(msg, params)
+        el.innerHTML = bananai18n.i18n(msg, ...params)
       })
     }
   }
