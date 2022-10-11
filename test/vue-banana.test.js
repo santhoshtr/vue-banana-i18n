@@ -11,7 +11,8 @@ const translations = {
     search_results: 'Found $1 {{PLURAL:$1|result|results}}',
     profile_change_message: '$1 changed {{GENDER:$2|his|her}} profile picture',
     hello_wikipedia: 'Hello [https://wikipedia.org wikipedia.org]',
-    hello_wikipedia_unsafe: 'Hello [http://wikipedia.org <script>alert( "link-script test" );</script>]'
+    hello_wikipedia_unsafe: 'Hello [http://wikipedia.org <script>alert( "link-script test" );</script>]',
+    'empty-results': 'No pages found for "$1" in $2'
   },
   ml: {
     hello_world: 'എല്ലാവർക്കും നമസ്കാരം',
@@ -108,6 +109,21 @@ describe('v-i18n directive', () => {
     assert.strict.equal(wrapper.text(), 'Found 11 results')
   })
 
+  it('message with multiple parameters should be translated', () => {
+    const wrapper = mount({
+      template: '<p v-i18n:empty-results="[\'Invalid page\', \'English\']" />',
+      setup (props) {
+        const setLocale = inject('setLocale')
+        setLocale('en')
+      }
+    }, {
+      global: {
+        plugins: [i18n]
+      }
+    })
+    assert.strict.equal(wrapper.text(), 'No pages found for "Invalid page" in English')
+  })
+
   it('html should be escaped', () => {
     const wrapper = mount({
       template: '<p v-i18n:hello_wikipedia></p>'
@@ -164,5 +180,31 @@ describe('v-i18n-html directive', () => {
 
     assert.strict.equal(wrapper.html(), '<p>Hello <a href="http://wikipedia.org">&lt;script&gt;alert( "link-script test" );&lt;/script&gt;</a></p>')
     assert.strict.notEqual(wrapper.find('a').attributes('href'), 'https://wikipedia.org')
+  })
+})
+
+describe('Vue-Banana-i18n global $i18n with multiple params', () => {
+  let wrapper
+  beforeEach(() => {
+    wrapper = mount({
+      template: `
+          <p>{{$i18n(msg, params)}}</p>
+        `,
+      props: {
+        msg: { type: String, default: 'empty-results' },
+        params: { type: Array }
+      }
+    }, {
+      props: {
+        msg: 'empty-results',
+        params: ['Invalid page', 'English']
+      },
+      global: {
+        plugins: [i18n]
+      }
+    })
+  })
+  it('will correctly replace all placeholders while using $i18n', () => {
+    assert.strict.equal(wrapper.text(), 'No pages found for "Invalid page" in English')
   })
 })
