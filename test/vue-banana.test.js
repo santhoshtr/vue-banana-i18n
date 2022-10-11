@@ -182,3 +182,29 @@ describe('v-i18n-html directive', () => {
     assert.strict.notEqual(wrapper.find('a').attributes('href'), 'https://wikipedia.org')
   })
 })
+
+describe('Vue-Banana-i18n global $i18n with multiple params', () => {
+  let wrapper
+  beforeEach(() => {
+    wrapper = mount({
+      template: `
+          <p>{{$i18n(msg, params)}}</p>
+        `,
+      props: {
+        msg: { type: String, default: 'empty-results' },
+        params: { type: Array }
+      }
+    }, {
+      props: {
+        msg: 'empty-results',
+        params: ['Invalid page', 'English']
+      },
+      global: {
+        plugins: [i18n]
+      }
+    })
+  })
+  it('will correctly replace all placeholders while using $i18n', () => {
+    assert.strict.equal(wrapper.text(), 'No pages found for "Invalid page" in English')
+  })
+})
