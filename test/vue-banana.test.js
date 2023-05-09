@@ -188,7 +188,7 @@ describe('Vue-Banana-i18n global $i18n with multiple params', () => {
   beforeEach(() => {
     wrapper = mount({
       template: `
-          <p>{{$i18n(msg, params)}}</p>
+          <p>{{$i18n(msg, ...params)}}</p>
         `,
       props: {
         msg: { type: String, default: 'empty-results' },

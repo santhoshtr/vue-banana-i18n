@@ -26,7 +26,7 @@ import i18n from 'vue-banana-i18n'
 <div id="app">
   <h1>{{ $i18n('hello_world') }}</h1>
   <h2 class='result'>{{ $i18n('search_results', 10) }}</h2>
-  <div class='status'>{{ $i18n('profile_change_message', 'Alice', 'female') }}</h2>
+  <div class='status'>{{ $i18n('profile_change_message', 'Alice', 'female') }}</div>
 </div>
 
 ```
@@ -67,7 +67,7 @@ The `v-i18n` directive as illustrated in below example is also useful. It sets t
 <div id="app">
   <h1 v-i18n="'hello_world'"></h1>
   <h2 class='result' v-i18n="{msg: 'search_results', params:[10]}"></h2>
-  <div class='status' v-i18n="{msg: 'profile_change_message', params:['Alice', 'female']}"></h2>
+  <div class='status' v-i18n="{msg: 'profile_change_message', params:['Alice', 'female']}"></div>
 </div>
 
 ```
@@ -78,7 +78,7 @@ Alternative syntax:
 <div id="app">
   <h1 v-i18n="'hello_world'"></h1>
   <h2 class='result' v-i18n:search_results="[10]"></h2>
-  <div class='status' v-i18n:profile_change_message="['Alice', 'female']"></h2>
+  <div class='status' v-i18n:profile_change_message="['Alice', 'female']"></div>
 </div>
 
 ```

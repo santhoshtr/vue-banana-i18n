@@ -48,11 +48,7 @@ export function createI18n (options = { messages: {}, locale: 'en', wikilinks: t
     install: (app) => {
       app.provide(contextSymbol, bananai18n)
 
-      app.config.globalProperties.$i18n = (msg, params) => {
-        params = params || []
-        if (!Array.isArray(params)) {
-          params = [params]
-        }
+      app.config.globalProperties.$i18n = (msg, ...params) => {
         return bananai18n.i18n(msg, ...params)
       }
 

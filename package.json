@@ -1,6 +1,6 @@
 {
   "name": "vue-banana-i18n",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "A Banana-i18n wrapper to support localization in Vue.js",
   "author": {
     "name": "Santhosh Thottingal",
