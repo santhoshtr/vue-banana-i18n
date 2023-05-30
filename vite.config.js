@@ -9,10 +9,11 @@ module.exports = defineConfig({
     // generate manifest.json in outDir
     manifest: true,
     minify: 'esbuild',
+    emptyOutDir: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.js'),
       name: 'vue-banana-i18n',
-      fileName: (format) => `vue-banana-i18n.${format}.js`
+      formats: ['es', 'umd'],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

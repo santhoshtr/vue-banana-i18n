@@ -1,6 +1,6 @@
 {
   "name": "vue-banana-i18n",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "A Banana-i18n wrapper to support localization in Vue.js",
   "author": {
     "name": "Santhosh Thottingal",
@@ -14,10 +14,10 @@
     "dist"
   ],
   "main": "./dist/vue-banana-i18n.umd.js",
-  "module": "./dist/vue-banana-i18n.es.js",
+  "module": "./dist/vue-banana-i18n.mjs",
   "exports": {
     ".": {
-      "import": "./dist/vue-banana-i18n.es.js",
+      "import": "./dist/vue-banana-i18n.mjs",
       "require": "./dist/vue-banana-i18n.umd.js"
     }
   },
